@@ -1,0 +1,90 @@
+# === Сборка и зависимости ===
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ===
+.vscode/
+
+# === Лог-файлы ===
+*.log
+logs/
+
+# === Временные файлы ===
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+
+# === OS файлы ===
+.DS_Store
+Thumbs.db
+
+# === Конфигурация с чувствительными данными ===
+application-local.properties
+application-local.yml
+*.secret
+*.key
+*.p12
+*.jks
+
+# === База данных ===
+*.db
+*.sqlite
+*.h2.db
+*.trace.db
+
+# === Gradle ===
+.gradle/
+gradle-app.setting
+!gradle/wrapper/gradle-wrapper.jar
+
+# === Maven ===
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# === Lombok ===
+.aj
+
+# === Тесты и отчеты ===
+/test-output/
+surefire-reports/
