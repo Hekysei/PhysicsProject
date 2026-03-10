@@ -22,13 +22,6 @@ public class SimulationController {
     public String MainPage(Model model) {
         // Инициализация формы с значениями по умолчанию
         CircuitData circuitData = new CircuitData();
-        circuitData.setV1(12.0);
-        circuitData.setR1(100.0);
-        circuitData.setR2(200.0);
-        circuitData.setR3(200.0);
-        circuitData.setR4(100.0);
-        circuitData.setR5(500.0);
-        circuitData.setR6(500.0);
         
         model.addAttribute("circuitData", circuitData);
         model.addAttribute("date", LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
