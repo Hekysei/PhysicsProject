@@ -4,292 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Симуляция Законов Кирхгофа</title>
-    <style>
-        :root {
-            --bg-color: #1e1e1e;
-            --panel-color: #252525;
-            --sidebar-color: #2d2d2d;
-            --text-color: #e0e0e0;
-            --accent-color: #4caf50;
-            --wire-color: #ff9800;
-            --component-color: #64b5f6;
-            --result-label: #90caf9;
-            --result-value: #69f0ae;
-            --result-unit: #888;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Шапка */
-        .header {
-            padding: 15px 20px;
-            background-color: #1a1a1a;
-            border-bottom: 1px solid #333;
-            flex-shrink: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .header h1 {
-            margin: 0;
-            font-weight: 300;
-            font-size: 1.5rem;
-            color: #fff;
-        }
-
-        /* Основной контейнер - теперь Row (горизонтальный) */
-        .container {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            height: calc(100vh - 61px);
-        }
-
-        /* Левая панель (Управление и результаты) */
-        .sidebar {
-            width: 400px;
-            min-width: 350px;
-            background-color: var(--sidebar-color);
-            padding: 20px;
-            overflow-y: auto;
-            border-right: 1px solid #444;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.5);
-            z-index: 10;
-        }
-
-        /* Правая панель (Схема) */
-        .canvas-area {
-            flex: 1;
-            background-color: var(--panel-color);
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            overflow: hidden;
-        }
-
-        svg {
-            width: 100%;
-            height: 100%;
-            max-width: 1000px;
-            max-height: 80vh;
-        }
-
-        /* Формы и инпуты */
-        .control-group {
-            background: rgba(0,0,0,0.2);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #333;
-        }
-
-        .control-group h4 {
-            margin: 0 0 15px 0;
-            font-size: 1rem;
-            color: var(--accent-color);
-            border-bottom: 1px solid #444;
-            padding-bottom: 8px;
-        }
-
-        .input-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .input-item label {
-            display: block;
-            font-size: 0.85em;
-            margin-bottom: 5px;
-            color: #aaa;
-        }
-
-        input[type="number"] {
-            width: 100%;
-            box-sizing: border-box;
-            background: #1e1e1e;
-            color: #fff;
-            border: 1px solid #555;
-            padding: 8px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 14px;
-            transition: border-color 0.2s;
-        }
-
-        input[type="number"]:focus {
-            outline: none;
-            border-color: var(--accent-color);
-        }
-
-        .btn-calculate {
-            width: 100%;
-            background: var(--accent-color);
-            color: #000;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .btn-calculate:hover {
-            background: #5ceb61;
-        }
-
-        .btn-calculate:active {
-            transform: scale(0.98);
-        }
-
-        /* Результаты */
-        .results-panel {
-            background: linear-gradient(145deg, #333, #2a2a2a);
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #444;
-        }
-
-        .results-panel h4 {
-            margin: 0 0 12px 0;
-            color: #fff;
-            font-size: 1.1em;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 8px;
-        }
-
-        .results {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 4px;
-            font-size: 0.95em;
-        }
-
-        .results tr {
-            background: rgba(255,255,255,0.03);
-            border-radius: 4px;
-        }
-
-        .results td {
-            padding: 8px 10px;
-        }
-
-        .results td:first-child {
-            color: var(--result-label);
-            width: 50%;
-        }
-
-        .results td:last-child {
-            color: var(--result-value);
-            font-weight: bold;
-            text-align: right;
-            font-family: monospace;
-            font-size: 1.1em;
-        }
-
-        .unit {
-            color: var(--result-unit);
-            font-size: 0.8em;
-            margin-left: 2px;
-            font-weight: normal;
-        }
-
-        .laws-box {
-            margin-top: 15px;
-            padding: 12px;
-            background: rgba(76, 175, 80, 0.1);
-            border-radius: 6px;
-            border-left: 4px solid var(--accent-color);
-            font-size: 0.85em;
-            line-height: 1.5;
-        }
-
-        /* Стили SVG элементов */
-        .wire { stroke: var(--wire-color); stroke-width: 3; fill: none; }
-        .component-box { fill: #333; stroke: var(--component-color); stroke-width: 2; }
-        .text-label { fill: #fff; font-size: 12px; font-family: monospace; font-weight: bold; }
-        .value-label { fill: var(--result-value); font-size: 13px; font-weight: bold; font-family: monospace; }
-        .volt-label { fill: #ffb74d; font-size: 11px; font-family: monospace; }
-        .arrow-fill { fill: var(--wire-color); }
-
-        /* Адаптивность для небольших экранов */
-        @media (max-width: 900px) {
-            .container { flex-direction: column; overflow-y: auto; }
-            .sidebar { width: 100%; min-width: auto; border-right: none; border-bottom: 1px solid #444; }
-            .canvas-area { min-height: 500px; }
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
 <div class="header">
     <h1>⚡ Симуляция Законов Кирхгофа</h1>
-    <div style="color: #888; font-size: 0.9em;" th:text="${date}"></div>
+    <div style="color: var(--text-muted); font-size: 0.9em; font-weight: 500;" th:text="${date}"></div>
 </div>
 
-<div class="container">
+<form class="container" th:action="@{/main}" th:object="${circuitData}" method="post">
 
     <div class="sidebar">
-        <form th:action="@{/main}" th:object="${circuitData}" method="post" style="display: flex; flex-direction: column; gap: 15px;">
-
-            <div class="control-group">
-                <h4>Источник питания</h4>
-                <div class="input-item">
-                    <label>V1 (Напряжение, В):</label>
-                    <input type="number" step="0.1" th:field="*{v1}" required>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <h4>Параметры резисторов (Ом)</h4>
-                <div class="input-grid">
-                    <div class="input-item">
-                        <label>R1 (Вход):</label>
-                        <input type="number" step="1" th:field="*{r1}" required>
-                    </div>
-                    <div class="input-item">
-                        <label>R4 (Связующий):</label>
-                        <input type="number" step="1" th:field="*{r4}" required>
-                    </div>
-
-                    <div class="input-item">
-                        <label>R2 (Блок 1 верх):</label>
-                        <input type="number" step="1" th:field="*{r2}" required>
-                    </div>
-                    <div class="input-item">
-                        <label>R3 (Блок 1 низ):</label>
-                        <input type="number" step="1" th:field="*{r3}" required>
-                    </div>
-
-                    <div class="input-item">
-                        <label>R5 (Блок 2 верх):</label>
-                        <input type="number" step="1" th:field="*{r5}" required>
-                    </div>
-                    <div class="input-item">
-                        <label>R6 (Блок 2 низ):</label>
-                        <input type="number" step="1" th:field="*{r6}" required>
-                    </div>
-                </div>
-            </div>
-
-            <button type="submit" class="btn-calculate">Рассчитать цепь</button>
-        </form>
+        <button type="submit" class="btn-calculate">Рассчитать цепь</button>
 
         <div class="results-panel" th:if="${results != null}">
             <h4>📊 Результаты расчёта</h4>
@@ -322,13 +49,35 @@
                 </tbody>
             </table>
 
-            <div class="laws-box">
-                <strong>⚖️ Баланс (Законы Кирхгофа):</strong><br>
-                <div style="margin-top: 5px;">
-                    <code>KCL:</code> <span th:text="${#numbers.formatDecimal(results.totalCurrent, 1, 2)} + ' = ' + ${#numbers.formatDecimal(results.currentR2, 1, 2)} + ' + ' + ${#numbers.formatDecimal(results.currentR3, 1, 2)}"></span> (mA)
+            <div class="laws-container">
+                <div class="law-card">
+                    <div class="law-name">Первый закон (Узел)</div>
+                    <div class="law-formula">I<sub>вх</sub> = I<sub>R2</sub> + I<sub>R3</sub></div>
+                    <div class="law-evaluation">
+                        <span class="val" th:text="${#numbers.formatDecimal(results.totalCurrent, 1, 2)}">0</span>
+                        <span class="eq">=</span>
+                        <span class="val" th:text="${#numbers.formatDecimal(results.currentR2, 1, 2)}">0</span>
+                        <span class="eq">+</span>
+                        <span class="val" th:text="${#numbers.formatDecimal(results.currentR3, 1, 2)}">0</span>
+                        <span class="unit" style="margin-left: 5px; color: var(--text-muted);">(mA)</span>
+                    </div>
                 </div>
-                <div style="margin-top: 5px;">
-                    <code>KVL:</code> <span th:text="${#numbers.formatDecimal(circuitData.v1, 1, 2)} + ' = ' + ${#numbers.formatDecimal(results.voltageR1, 1, 2)} + ' + ' + ${#numbers.formatDecimal(results.voltageBlock1, 1, 2)} + ' + ' + ${#numbers.formatDecimal(results.voltageR4, 1, 2)} + ' + ' + ${#numbers.formatDecimal(results.voltageBlock2, 1, 2)}"></span> (V)
+
+                <div class="law-card">
+                    <div class="law-name">Второй закон (Контур)</div>
+                    <div class="law-formula">E = U<sub>R1</sub> + U<sub>Блок 1</sub> + U<sub>R4</sub> + U<sub>Блок 2</sub></div>
+                    <div class="law-evaluation">
+                        <span class="val" th:text="${#numbers.formatDecimal(circuitData.v1, 1, 2)}">0</span>
+                        <span class="eq">=</span>
+                        <span class="val" th:text="${#numbers.formatDecimal(results.voltageR1, 1, 2)}">0</span>
+                        <span class="eq">+</span>
+                        <span class="val" th:text="${#numbers.formatDecimal(results.voltageBlock1, 1, 2)}">0</span>
+                        <span class="eq">+</span>
+                        <span class="val" th:text="${#numbers.formatDecimal(results.voltageR4, 1, 2)}">0</span>
+                        <span class="eq">+</span>
+                        <span class="val" th:text="${#numbers.formatDecimal(results.voltageBlock2, 1, 2)}">0</span>
+                        <span class="unit" style="margin-left: 5px; color: var(--text-muted);">(V)</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -336,91 +85,130 @@
 
     <div class="canvas-area">
         <svg viewBox="-80 0 880 500" id="circuit-svg" preserveAspectRatio="xMidYMid meet">
+            <line x1="50" y1="220" x2="50" y2="150" class="wire wire-tot" />
+            <line x1="50" y1="150" x2="100" y2="150" class="wire wire-tot" />
+            <line x1="160" y1="150" x2="200" y2="150" class="wire wire-tot" />
+            <line x1="200" y1="150" x2="200" y2="100" class="wire wire-r2" />
+            <line x1="200" y1="150" x2="200" y2="200" class="wire wire-r3" />
+            <line x1="200" y1="100" x2="230" y2="100" class="wire wire-r2" />
+            <line x1="200" y1="200" x2="230" y2="200" class="wire wire-r3" />
+            <line x1="290" y1="100" x2="320" y2="100" class="wire wire-r2" />
+            <line x1="290" y1="200" x2="320" y2="200" class="wire wire-r3" />
+            <line x1="320" y1="100" x2="320" y2="150" class="wire wire-r2" />
+            <line x1="320" y1="200" x2="320" y2="150" class="wire wire-r3" />
+            <line x1="320" y1="150" x2="350" y2="150" class="wire wire-tot" />
+            <line x1="410" y1="150" x2="450" y2="150" class="wire wire-tot" />
+            <line x1="450" y1="150" x2="450" y2="100" class="wire wire-r5" />
+            <line x1="450" y1="150" x2="450" y2="200" class="wire wire-r6" />
+            <line x1="450" y1="100" x2="480" y2="100" class="wire wire-r5" />
+            <line x1="450" y1="200" x2="480" y2="200" class="wire wire-r6" />
+            <line x1="540" y1="100" x2="570" y2="100" class="wire wire-r5" />
+            <line x1="540" y1="200" x2="570" y2="200" class="wire wire-r6" />
+            <line x1="570" y1="100" x2="570" y2="150" class="wire wire-r5" />
+            <line x1="570" y1="200" x2="570" y2="150" class="wire wire-r6" />
+            <line x1="570" y1="150" x2="720" y2="150" class="wire wire-tot" />
+            <line x1="720" y1="150" x2="720" y2="350" class="wire wire-tot" />
+            <line x1="720" y1="350" x2="50" y2="350" class="wire wire-tot" />
+            <line x1="50" y1="350" x2="50" y2="280" class="wire wire-tot" />
 
-            <line x1="50" y1="220" x2="50" y2="150" class="wire" />
-            <line x1="50" y1="150" x2="100" y2="150" class="wire" />
-            <line x1="160" y1="150" x2="200" y2="150" class="wire" />
-            <line x1="200" y1="150" x2="200" y2="100" class="wire" />
-            <line x1="200" y1="150" x2="200" y2="200" class="wire" />
-            <line x1="200" y1="100" x2="230" y2="100" class="wire" />
-            <line x1="200" y1="200" x2="230" y2="200" class="wire" />
-            <line x1="290" y1="100" x2="320" y2="100" class="wire" />
-            <line x1="290" y1="200" x2="320" y2="200" class="wire" />
-            <line x1="320" y1="100" x2="320" y2="150" class="wire" />
-            <line x1="320" y1="200" x2="320" y2="150" class="wire" />
-            <line x1="320" y1="150" x2="350" y2="150" class="wire" />
-            <line x1="410" y1="150" x2="450" y2="150" class="wire" />
-            <line x1="450" y1="150" x2="450" y2="100" class="wire" />
-            <line x1="450" y1="150" x2="450" y2="200" class="wire" />
-            <line x1="450" y1="100" x2="480" y2="100" class="wire" />
-            <line x1="450" y1="200" x2="480" y2="200" class="wire" />
-            <line x1="540" y1="100" x2="570" y2="100" class="wire" />
-            <line x1="540" y1="200" x2="570" y2="200" class="wire" />
-            <line x1="570" y1="100" x2="570" y2="150" class="wire" />
-            <line x1="570" y1="200" x2="570" y2="150" class="wire" />
-            <line x1="570" y1="150" x2="720" y2="150" class="wire" />
-            <line x1="720" y1="150" x2="720" y2="350" class="wire" />
-            <line x1="720" y1="350" x2="50" y2="350" class="wire" />
-            <line x1="50" y1="350" x2="50" y2="280" class="wire" />
-
-            <circle cx="50" cy="250" r="30" fill="#252525" stroke="#ff9800" stroke-width="2"/>
-            <text x="50" y="255" text-anchor="middle" class="text-label">V1</text>
-            <text x="-5" y="255" text-anchor="end" class="volt-label" th:text="${circuitData.v1} + 'V'">12.0V</text>
+            <circle cx="50" cy="250" r="30" fill="#161b22" stroke="var(--wire-color)" stroke-width="2"/>
+            <text x="50" y="243" text-anchor="middle" class="text-label-main">E</text>
+            <foreignObject x="20" y="250" width="60" height="25">
+                <input type="number" step="0.1" th:field="*{v1}" class="svg-input" style="color: var(--wire-color);" title="Напряжение E">
+            </foreignObject>
 
             <g th:attr="transform=${circuitData.v1 < 0 ? 'rotate(180 180 150)' : ''}">
-                <polygon points="175,143 188,150 175,157" class="arrow-fill" />
+                <polygon points="175,143 188,150 175,157" class="arrow-fill wire-tot" />
             </g>
             <g th:attr="transform=${circuitData.v1 < 0 ? 'rotate(180 305 100)' : ''}">
-                <polygon points="300,93 313,100 300,107" class="arrow-fill" />
+                <polygon points="300,93 313,100 300,107" class="arrow-fill wire-r2" />
             </g>
             <g th:attr="transform=${circuitData.v1 < 0 ? 'rotate(180 305 200)' : ''}">
-                <polygon points="300,193 313,200 300,207" class="arrow-fill" />
+                <polygon points="300,193 313,200 300,207" class="arrow-fill wire-r3" />
             </g>
             <g th:attr="transform=${circuitData.v1 < 0 ? 'rotate(180 430 150)' : ''}">
-                <polygon points="423,143 436,150 423,157" class="arrow-fill" />
+                <polygon points="423,143 436,150 423,157" class="arrow-fill wire-tot" />
             </g>
             <g th:attr="transform=${circuitData.v1 < 0 ? 'rotate(180 555 100)' : ''}">
-                <polygon points="550,93 563,100 550,107" class="arrow-fill" />
+                <polygon points="550,93 563,100 550,107" class="arrow-fill wire-r5" />
             </g>
             <g th:attr="transform=${circuitData.v1 < 0 ? 'rotate(180 555 200)' : ''}">
-                <polygon points="550,193 563,200 550,207" class="arrow-fill" />
+                <polygon points="550,193 563,200 550,207" class="arrow-fill wire-r6" />
             </g>
             <g th:attr="transform=${circuitData.v1 < 0 ? 'rotate(180 385 350)' : ''}">
-                <polygon points="392,343 379,350 392,357" class="arrow-fill" />
+                <polygon points="392,343 379,350 392,357" class="arrow-fill wire-tot" />
             </g>
 
+            <text x="130" y="125" text-anchor="middle" class="resistor-name">R1</text>
             <rect x="100" y="135" width="60" height="30" class="component-box" />
-            <text x="130" y="125" text-anchor="middle" class="text-label" th:text="'R1 (' + ${circuitData.r1} + 'Ω)'">R1</text>
+            <foreignObject x="100" y="135" width="60" height="30">
+                <input type="number" step="1" th:field="*{r1}" class="svg-input" title="R1 (Ом)">
+            </foreignObject>
             <text x="130" y="180" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.totalCurrent), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="130" y="195" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageR1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
+            <text x="260" y="75" text-anchor="middle" class="resistor-name">R2</text>
             <rect x="230" y="85" width="60" height="30" class="component-box" />
-            <text x="260" y="75" text-anchor="middle" class="text-label" th:text="'R2 (' + ${circuitData.r2} + 'Ω)'">R2</text>
+            <foreignObject x="230" y="85" width="60" height="30">
+                <input type="number" step="1" th:field="*{r2}" class="svg-input" title="R2 (Ом)">
+            </foreignObject>
             <text x="260" y="130" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR2), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="260" y="145" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
+            <text x="260" y="175" text-anchor="middle" class="resistor-name">R3</text>
             <rect x="230" y="185" width="60" height="30" class="component-box" />
-            <text x="260" y="230" text-anchor="middle" class="text-label" th:text="'R3 (' + ${circuitData.r3} + 'Ω)'">R3</text>
-            <text x="260" y="245" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR3), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
-            <text x="260" y="260" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
+            <foreignObject x="230" y="185" width="60" height="30">
+                <input type="number" step="1" th:field="*{r3}" class="svg-input" title="R3 (Ом)">
+            </foreignObject>
+            <text x="260" y="230" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR3), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
+            <text x="260" y="245" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
+            <text x="380" y="125" text-anchor="middle" class="resistor-name">R4</text>
             <rect x="350" y="135" width="60" height="30" class="component-box" />
-            <text x="380" y="125" text-anchor="middle" class="text-label" th:text="'R4 (' + ${circuitData.r4} + 'Ω)'">R4</text>
+            <foreignObject x="350" y="135" width="60" height="30">
+                <input type="number" step="1" th:field="*{r4}" class="svg-input" title="R4 (Ом)">
+            </foreignObject>
             <text x="380" y="180" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.totalCurrent), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="380" y="195" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageR4), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
+            <text x="510" y="75" text-anchor="middle" class="resistor-name">R5</text>
             <rect x="480" y="85" width="60" height="30" class="component-box" />
-            <text x="510" y="75" text-anchor="middle" class="text-label" th:text="'R5 (' + ${circuitData.r5} + 'Ω)'">R5</text>
+            <foreignObject x="480" y="85" width="60" height="30">
+                <input type="number" step="1" th:field="*{r5}" class="svg-input" title="R5 (Ом)">
+            </foreignObject>
             <text x="510" y="130" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR5), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="510" y="145" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock2), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
+            <text x="510" y="175" text-anchor="middle" class="resistor-name">R6</text>
             <rect x="480" y="185" width="60" height="30" class="component-box" />
-            <text x="510" y="230" text-anchor="middle" class="text-label" th:text="'R6 (' + ${circuitData.r6} + 'Ω)'">R6</text>
-            <text x="510" y="245" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR6), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
-            <text x="510" y="260" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock2), 1, 1) + 'V' : '0.0V'}">0.0V</text>
+            <foreignObject x="480" y="185" width="60" height="30">
+                <input type="number" step="1" th:field="*{r6}" class="svg-input" title="R6 (Ом)">
+            </foreignObject>
+            <text x="510" y="230" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR6), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
+            <text x="510" y="245" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock2), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
         </svg>
+
+        <div class="gradient-legend" th:if="${results != null}">
+            <div class="gradient-legend-title">Шкала силы тока</div>
+            <div class="gradient-bar"></div>
+            <div class="gradient-labels">
+                <span id="legend-min">0 mA</span>
+                <span id="legend-max">0 mA</span>
+            </div>
+        </div>
     </div>
-</div>
+</form>
+
+<script th:src="@{/js/script.js}"></script>
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var results = /*[[${results}]]*/ null;
+        if (results) {
+            applyCircuitColors(results);
+        }
+    });
+</script>
+
 </body>
 </html>
