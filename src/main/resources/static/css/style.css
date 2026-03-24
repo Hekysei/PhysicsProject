@@ -196,6 +196,15 @@ svg {
 }
 .gradient-labels { display: flex; justify-content: space-between; font-size: 12px; margin-top: 8px; color: var(--text-muted); font-family: 'Consolas', monospace; font-weight: bold; }
 
+/* Контейнер для инпута и подписи "Ом" / "В" */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
 /* Инпуты поверх SVG */
 .svg-input {
     width: 100%;
@@ -205,7 +214,9 @@ svg {
     color: #fff;
     border: 1px dashed rgba(255,255,255,0.2);
     border-radius: 4px;
-    text-align: center;
+    text-align: right; /* Смещаем текст вправо, чтобы число стояло рядом с "Ом" */
+    padding-right: 22px; /* Оставляем место под надпись "Ом" */
+    padding-left: 2px;
     font-family: 'Consolas', monospace;
     font-size: 14px;
     font-weight: bold;
@@ -219,3 +230,26 @@ svg {
 /* Прячем стрелочки у инпутов */
 .svg-input::-webkit-outer-spin-button,
 .svg-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+/* Надпись "Ом" или "В" внутри поля */
+.input-unit {
+    position: absolute;
+    right: 4px;
+    color: rgba(255,255,255,0.7);
+    font-size: 11px;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: bold;
+    pointer-events: none; /* Чтобы клик мышкой проходил сквозь надпись в сам инпут */
+}
+
+
+/* Скрытие кнопок +1/-1 у числовых полей во всех браузерах */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}

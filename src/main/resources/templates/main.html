@@ -114,7 +114,10 @@
             <circle cx="50" cy="250" r="30" fill="#161b22" stroke="var(--wire-color)" stroke-width="2"/>
             <text x="50" y="243" text-anchor="middle" class="text-label-main">E</text>
             <foreignObject x="20" y="250" width="60" height="25">
-                <input type="number" step="0.1" th:field="*{v1}" class="svg-input" style="color: var(--wire-color);" title="Напряжение E">
+                <div class="input-wrapper">
+                    <input type="number" step="1" id="v1" name="v1" th:value="${#numbers.formatDecimal(circuitData.v1, 1, 0)}" class="svg-input" style="color: var(--wire-color);" title="Напряжение E">
+                    <span class="input-unit" style="color: var(--wire-color);">В</span>
+                </div>
             </foreignObject>
 
             <g th:attr="transform=${circuitData.v1 < 0 ? 'rotate(180 180 150)' : ''}">
@@ -142,7 +145,10 @@
             <text x="130" y="125" text-anchor="middle" class="resistor-name">R1</text>
             <rect x="100" y="135" width="60" height="30" class="component-box" />
             <foreignObject x="100" y="135" width="60" height="30">
-                <input type="number" step="1" th:field="*{r1}" class="svg-input" title="R1 (Ом)">
+                <div class="input-wrapper">
+                    <input type="number" step="1" id="r1" name="r1" th:value="${#numbers.formatDecimal(circuitData.r1, 1, 0)}" class="svg-input" title="R1 (Ом)">
+                    <span class="input-unit">Ом</span>
+                </div>
             </foreignObject>
             <text x="130" y="180" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.totalCurrent), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="130" y="195" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageR1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
@@ -150,7 +156,10 @@
             <text x="260" y="75" text-anchor="middle" class="resistor-name">R2</text>
             <rect x="230" y="85" width="60" height="30" class="component-box" />
             <foreignObject x="230" y="85" width="60" height="30">
-                <input type="number" step="1" th:field="*{r2}" class="svg-input" title="R2 (Ом)">
+                <div class="input-wrapper">
+                    <input type="number" step="1" id="r2" name="r2" th:value="${#numbers.formatDecimal(circuitData.r2, 1, 0)}" class="svg-input" title="R2 (Ом)">
+                    <span class="input-unit">Ом</span>
+                </div>
             </foreignObject>
             <text x="260" y="130" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR2), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="260" y="145" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
@@ -158,7 +167,10 @@
             <text x="260" y="175" text-anchor="middle" class="resistor-name">R3</text>
             <rect x="230" y="185" width="60" height="30" class="component-box" />
             <foreignObject x="230" y="185" width="60" height="30">
-                <input type="number" step="1" th:field="*{r3}" class="svg-input" title="R3 (Ом)">
+                <div class="input-wrapper">
+                    <input type="number" step="1" id="r3" name="r3" th:value="${#numbers.formatDecimal(circuitData.r3, 1, 0)}" class="svg-input" title="R3 (Ом)">
+                    <span class="input-unit">Ом</span>
+                </div>
             </foreignObject>
             <text x="260" y="230" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR3), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="260" y="245" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
@@ -166,7 +178,10 @@
             <text x="380" y="125" text-anchor="middle" class="resistor-name">R4</text>
             <rect x="350" y="135" width="60" height="30" class="component-box" />
             <foreignObject x="350" y="135" width="60" height="30">
-                <input type="number" step="1" th:field="*{r4}" class="svg-input" title="R4 (Ом)">
+                <div class="input-wrapper">
+                    <input type="number" step="1" id="r4" name="r4" th:value="${#numbers.formatDecimal(circuitData.r4, 1, 0)}" class="svg-input" title="R4 (Ом)">
+                    <span class="input-unit">Ом</span>
+                </div>
             </foreignObject>
             <text x="380" y="180" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.totalCurrent), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="380" y="195" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageR4), 1, 1) + 'V' : '0.0V'}">0.0V</text>
@@ -174,7 +189,10 @@
             <text x="510" y="75" text-anchor="middle" class="resistor-name">R5</text>
             <rect x="480" y="85" width="60" height="30" class="component-box" />
             <foreignObject x="480" y="85" width="60" height="30">
-                <input type="number" step="1" th:field="*{r5}" class="svg-input" title="R5 (Ом)">
+                <div class="input-wrapper">
+                    <input type="number" step="1" id="r5" name="r5" th:value="${#numbers.formatDecimal(circuitData.r5, 1, 0)}" class="svg-input" title="R5 (Ом)">
+                    <span class="input-unit">Ом</span>
+                </div>
             </foreignObject>
             <text x="510" y="130" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR5), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="510" y="145" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock2), 1, 1) + 'V' : '0.0V'}">0.0V</text>
@@ -182,7 +200,10 @@
             <text x="510" y="175" text-anchor="middle" class="resistor-name">R6</text>
             <rect x="480" y="185" width="60" height="30" class="component-box" />
             <foreignObject x="480" y="185" width="60" height="30">
-                <input type="number" step="1" th:field="*{r6}" class="svg-input" title="R6 (Ом)">
+                <div class="input-wrapper">
+                    <input type="number" step="1" id="r6" name="r6" th:value="${#numbers.formatDecimal(circuitData.r6, 1, 0)}" class="svg-input" title="R6 (Ом)">
+                    <span class="input-unit">Ом</span>
+                </div>
             </foreignObject>
             <text x="510" y="230" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR6), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
             <text x="510" y="245" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock2), 1, 1) + 'V' : '0.0V'}">0.0V</text>
