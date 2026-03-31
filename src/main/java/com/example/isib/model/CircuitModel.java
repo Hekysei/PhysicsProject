@@ -2,6 +2,8 @@ package com.example.isib.model;
 
 import org.springframework.stereotype.Component;
 
+import com.example.isib.model.ErrorRate;
+
 @Component
 public class CircuitModel {
     
@@ -12,7 +14,11 @@ public class CircuitModel {
      */
     public CircuitResults calculate(CircuitData data) {
         CircuitResults results = new CircuitResults();
+        ErrorRate error_rate = new ErrorRate();
+        error_rate.setActive(true);
         
+        data.setV1(error_rate.applyNoise(data.getV1()));
+
         // Расчёт эквивалентных сопротивлений параллельных блоков
         double rBlock1 = calculateParallelResistance(data.getR2(), data.getR3());
         double rBlock2 = calculateParallelResistance(data.getR5(), data.getR6());

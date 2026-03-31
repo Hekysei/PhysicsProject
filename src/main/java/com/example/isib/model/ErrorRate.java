@@ -1,11 +1,10 @@
-package com.example.physic.model;
+package com.example.isib.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -19,9 +18,9 @@ import java.util.*;
 public class ErrorRate {
     private boolean active = false;
     private List<Double> measurements = new ArrayList<>();
-    private Double confidenceLevel = 0.95;
-    private Double studentCoefficient = 2.0;
-    private Double systematicError = 0.5;
+    private double confidenceLevel = 0.95;
+    private double studentCoefficient = 2.0;
+    private double systematicError = 0.5;
 
     private final Random random = new Random();
 
@@ -33,6 +32,9 @@ public class ErrorRate {
         double measuredValue = trueValue + systematicError + randomComponent;
         return Math.round(measuredValue * 100.0) / 100.0;
     }
+public void setElementInList(Double element){
+  measurements.add(element );
+}
 
     public double calculateAbsoluteError() {
 
