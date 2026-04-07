@@ -1,4 +1,4 @@
-package com.example.isib.web;
+package com.example.isib.ui;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

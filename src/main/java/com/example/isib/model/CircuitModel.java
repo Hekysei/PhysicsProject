@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class CircuitModel {
 
+    private static final double MAX_ERROR_PERCENT = 50.0;
+
     /**
      * Расчёт электрической цепи по законам Кирхгофа
      * @param data Входные параметры цепи
@@ -13,7 +15,9 @@ public class CircuitModel {
     public CircuitResults calculate(CircuitData data) {
         CircuitResults results = new CircuitResults();
         ErrorRate err = new ErrorRate();
-        err.setActive(true);
+        err.setActive(data.isErrorsEnabled());
+        err.setVoltageRelativeError(clampPercentToFraction(data.getVoltageErrorPercent()));
+        err.setResistorRelativeError(clampPercentToFraction(data.getResistorErrorPercent()));
 
         double v1 = err.applyVoltageSourceError(data.getV1());
         double r1 = err.applyResistorNominalError(data.getR1());
@@ -87,5 +91,16 @@ public class CircuitModel {
                 + results.getVoltageR4() + results.getVoltageBlock2();
 
         return Math.abs(data.getV1() - totalVoltage) < tolerance;
+    }
+
+    /** Проценты в доли; ограничение 0…50% для устойчивости расчёта. */
+    private static double clampPercentToFraction(double percent) {
+        if (percent < 0) {
+            return 0;
+        }
+        if (percent > MAX_ERROR_PERCENT) {
+            return MAX_ERROR_PERCENT / 100.0;
+        }
+        return percent / 100.0;
     }
 }

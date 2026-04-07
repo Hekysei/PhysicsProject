@@ -14,6 +14,13 @@ public class CircuitData {
   private double R5 = 500.0;
   private double R6 = 500.0;
 
+  /** Включить случайный разброс входных U и R по заданным процентам. */
+  private boolean errorsEnabled = true;
+  /** Относительная половина интервала для ЭДС, % (например 1 → ±1% к номиналу U). */
+  private double voltageErrorPercent = 1.0;
+  /** То же для номиналов резисторов, % (например 2 → ±2%). */
+  private double resistorErrorPercent = 2.0;
+
   public CircuitData() {
   }
 

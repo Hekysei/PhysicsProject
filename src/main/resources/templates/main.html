@@ -16,6 +16,23 @@
 <form class="container" th:action="@{/main}" th:object="${circuitData}" method="post">
 
     <div class="sidebar">
+        <div class="errors-panel results-panel">
+            <h4>Погрешности входа</h4>
+            <p class="errors-hint">Случайный разброс только номиналов E и резисторов перед расчётом (± от введённого значения).</p>
+            <label class="errors-checkbox">
+                <input type="checkbox" th:field="*{errorsEnabled}"/>
+                <span>Учитывать погрешности</span>
+            </label>
+            <div class="errors-fields">
+                <label class="errors-label" for="voltageErrorPercent">Источник E, ±% к U</label>
+                <input type="number" id="voltageErrorPercent" class="sidebar-input" step="0.1" min="0" max="50"
+                       th:field="*{voltageErrorPercent}"/>
+                <label class="errors-label" for="resistorErrorPercent">Резисторы, ±% к R</label>
+                <input type="number" id="resistorErrorPercent" class="sidebar-input" step="0.1" min="0" max="50"
+                       th:field="*{resistorErrorPercent}"/>
+            </div>
+        </div>
+
         <button type="submit" class="btn-calculate">Рассчитать цепь</button>
 
         <div class="results-panel" th:if="${results != null}">
