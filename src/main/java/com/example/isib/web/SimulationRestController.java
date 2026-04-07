@@ -1,6 +1,6 @@
 package com.example.isib.web;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,13 +13,13 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
-@Controller
-public class SimulationController {
+@RestController
+public class SimulationRestController {
 
   @Autowired
   private CircuitModel circuitModel;
 
-  @GetMapping("/main")
+  @GetMapping("/rest_main")
   public String MainPage(Model model) {
     CircuitData circuitData = new CircuitData();
 
@@ -28,7 +28,7 @@ public class SimulationController {
     return "main";
   }
 
-  @PostMapping("/main")
+  @PostMapping("/rest_main")
   public String calculateCircuit(@ModelAttribute CircuitData circuitData, Model model) {
     CircuitResults results = circuitModel.calculate(circuitData);
 
