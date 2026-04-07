@@ -1,4 +1,4 @@
-package com.example.isib.web;
+package com.example.isib.api;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.ui.Model;

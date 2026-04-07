@@ -7,10 +7,6 @@ import lombok.Setter;
 
 import java.util.*;
 
-/**
- * Класс для обработки погрешностей измерений.
- * Содержит логику для генерации случайных ошибок и расчета доверительного интервала.
- */
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
