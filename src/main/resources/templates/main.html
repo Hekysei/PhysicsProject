@@ -10,10 +10,15 @@
 
 <div class="header">
     <h1>⚡ Симуляция Законов Кирхгофа</h1>
-    <div style="color: var(--text-muted); font-size: 0.9em; font-weight: 500;" th:text="${date}"></div>
+    <div class="header-right">
+        <div style="color: var(--text-muted); font-size: 0.9em; font-weight: 500;" th:text="${date}"></div>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="btn-logout">Выйти</button>
+        </form>
+    </div>
 </div>
 
-<form class="container" th:action="@{/main}" th:object="${circuitData}" method="post">
+<form class="container" th:action="@{/}" th:object="${circuitData}" method="post">
 
     <div class="sidebar">
         <div class="errors-panel results-panel">

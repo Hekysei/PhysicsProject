@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — Симуляция Кирхгофа</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="login-body">
+
+<div class="login-card">
+    <h1 class="login-title">⚡ Вход</h1>
+    <p class="login-subtitle">Симуляция законов Кирхгофа</p>
+
+    <div class="login-alert login-alert-error" th:if="${param.error != null}">
+        Неверное имя пользователя или пароль.
+    </div>
+    <div class="login-alert login-alert-success" th:if="${param.logout != null}">
+        Вы вышли из системы.
+    </div>
+
+    <form class="login-form" th:action="@{/login}" method="post">
+        <label class="login-label" for="username">Имя пользователя</label>
+        <input class="login-input" id="username" name="username" type="text" autocomplete="username" required autofocus>
+
+        <label class="login-label" for="password">Пароль</label>
+        <input class="login-input" id="password" name="password" type="password" autocomplete="current-password" required>
+
+        <button class="btn-calculate login-submit" type="submit">Войти</button>
+    </form>
+</div>
+
+</body>
+</html>

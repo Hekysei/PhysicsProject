@@ -19,7 +19,7 @@ public class SimulationController {
   @Autowired
   private CircuitModel circuitModel;
 
-  @GetMapping("/main")
+  @GetMapping("/")
   public String MainPage(Model model) {
     CircuitData circuitData = new CircuitData();
 
@@ -28,7 +28,7 @@ public class SimulationController {
     return "main";
   }
 
-  @PostMapping("/main")
+  @PostMapping("/")
   public String calculateCircuit(@ModelAttribute CircuitData circuitData, Model model) {
     CircuitResults results = circuitModel.calculate(circuitData);
 

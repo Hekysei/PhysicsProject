@@ -309,3 +309,116 @@ input[type="number"] {
     -moz-appearance: textfield;
     appearance: textfield;
 }
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.logout-form {
+    margin: 0;
+}
+
+.btn-logout {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-color);
+    background: var(--panel-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.btn-logout:hover {
+    background: var(--border-color);
+    border-color: var(--text-muted);
+}
+
+/* Страница входа */
+.login-body {
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    margin: 24px;
+    padding: 32px 28px;
+    background: var(--panel-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.login-title {
+    margin: 0 0 8px;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+.login-subtitle {
+    margin: 0 0 24px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.login-alert {
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+}
+
+.login-alert-error {
+    background: rgba(248, 81, 73, 0.12);
+    border: 1px solid rgba(248, 81, 73, 0.35);
+    color: #ff7b72;
+}
+
+.login-alert-success {
+    background: rgba(35, 134, 54, 0.12);
+    border: 1px solid rgba(35, 134, 54, 0.35);
+    color: var(--accent-hover);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.login-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.login-label:first-of-type {
+    margin-top: 0;
+}
+
+.login-input {
+    padding: 10px 12px;
+    font-size: 1rem;
+    color: var(--text-color);
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    outline: none;
+}
+
+.login-input:focus {
+    border-color: var(--component-color);
+    box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.2);
+}
+
+.login-submit {
+    margin-top: 20px;
+    width: 100%;
+}
