@@ -21,8 +21,8 @@ public class KirchhoffSecurityConfiguration {
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
         .authorizeHttpRequests(auth -> auth
             .requestMatchers(
-                "/login",
-                "/register",
+                "/kirchhoff/login",
+                "/kirchhoff/register",
                 "/kirchhoff/css/**",
                 "/kirchhoff/js/**",
                 "/error",
@@ -31,11 +31,12 @@ public class KirchhoffSecurityConfiguration {
             .permitAll()
             .anyRequest().authenticated())
         .formLogin(form -> form
-            .loginPage("/login")
+            .loginPage("/kirchhoff/login")
+            .loginProcessingUrl("/kirchhoff/login")
             .defaultSuccessUrl("/kirchhoff", true)
             .permitAll())
         .logout(logout -> logout
-            .logoutSuccessUrl("/login?logout"));
+            .logoutSuccessUrl("/kirchhoff/login?logout"));
 
     return http.build();
   }

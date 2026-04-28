@@ -19,18 +19,18 @@ public class KirchhoffLoginController {
     this.fileUserAccountService = fileUserAccountService;
   }
 
-  @GetMapping("/login")
+  @GetMapping("/kirchhoff/login")
   public String login() {
     return "kirchhoff/kirchhoff-login";
   }
 
-  @GetMapping("/register")
+  @GetMapping("/kirchhoff/register")
   public String registerPage(Model model) {
     model.addAttribute("registrationForm", new UserRegistrationForm());
     return "kirchhoff/kirchhoff-register";
   }
 
-  @PostMapping("/register")
+  @PostMapping("/kirchhoff/register")
   public String register(
       @Valid @ModelAttribute("registrationForm") UserRegistrationForm registrationForm,
       BindingResult bindingResult,
@@ -43,7 +43,7 @@ public class KirchhoffLoginController {
       fileUserAccountService.registerUser(
           registrationForm.getUsername(),
           registrationForm.getPassword());
-      return "redirect:/login?registered";
+      return "redirect:/kirchhoff/login?registered";
     } catch (IllegalArgumentException ex) {
       model.addAttribute("errorMessage", ex.getMessage());
       return "kirchhoff/kirchhoff-register";
