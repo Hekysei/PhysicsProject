@@ -13,12 +13,14 @@
     <div class="header-right">
         <div style="color: var(--text-muted); font-size: 0.9em; font-weight: 500;" th:text="${date}"></div>
         <form th:action="@{/logout}" method="post" class="logout-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <button type="submit" class="btn-logout">Выйти</button>
         </form>
     </div>
 </div>
 
 <form class="container" th:action="@{/}" th:object="${circuitData}" method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
     <div class="sidebar">
         <div class="errors-panel results-panel">

@@ -422,3 +422,19 @@ input[type="number"] {
     margin-top: 20px;
     width: 100%;
 }
+
+.login-switch {
+    margin: 18px 0 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+.login-switch a {
+    color: var(--component-color);
+    text-decoration: none;
+}
+
+.login-switch a:hover {
+    text-decoration: underline;
+}
