@@ -1,8 +1,8 @@
-package com.example.isib.ui;
+package com.example.isib.kirchhoff.ui;
 
-import com.example.isib.model.KirchhoffCircuitData;
-import com.example.isib.model.KirchhoffCircuitModel;
-import com.example.isib.model.KirchhoffSimulationOutcome;
+import com.example.isib.kirchhoff.model.KirchhoffCircuitData;
+import com.example.isib.kirchhoff.model.KirchhoffCircuitModel;
+import com.example.isib.kirchhoff.model.KirchhoffSimulationOutcome;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

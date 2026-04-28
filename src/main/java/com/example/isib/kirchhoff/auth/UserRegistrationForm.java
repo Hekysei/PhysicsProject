@@ -1,4 +1,4 @@
-package com.example.isib.auth;
+package com.example.isib.kirchhoff.auth;
 
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;

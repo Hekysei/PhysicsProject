@@ -1,7 +1,7 @@
-package com.example.isib.ui;
+package com.example.isib.kirchhoff.ui;
 
-import com.example.isib.auth.FileUserAccountService;
-import com.example.isib.auth.UserRegistrationForm;
+import com.example.isib.kirchhoff.auth.FileUserAccountService;
+import com.example.isib.kirchhoff.auth.UserRegistrationForm;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

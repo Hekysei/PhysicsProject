@@ -1,4 +1,4 @@
-package com.example.isib.auth;
+package com.example.isib.kirchhoff.auth;
 
 record StoredUserRecord(String username, String passwordHash) {
 

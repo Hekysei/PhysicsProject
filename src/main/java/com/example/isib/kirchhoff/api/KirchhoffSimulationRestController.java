@@ -1,8 +1,8 @@
-package com.example.isib.api;
+package com.example.isib.kirchhoff.api;
 
-import com.example.isib.model.KirchhoffCircuitData;
-import com.example.isib.model.KirchhoffCircuitModel;
-import com.example.isib.model.KirchhoffSimulationOutcome;
+import com.example.isib.kirchhoff.model.KirchhoffCircuitData;
+import com.example.isib.kirchhoff.model.KirchhoffCircuitModel;
+import com.example.isib.kirchhoff.model.KirchhoffSimulationOutcome;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

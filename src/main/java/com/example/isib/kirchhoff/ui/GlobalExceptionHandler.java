@@ -1,6 +1,6 @@
-package com.example.isib.ui;
+package com.example.isib.kirchhoff.ui;
 
-import com.example.isib.auth.UserRegistrationForm;
+import com.example.isib.kirchhoff.auth.UserRegistrationForm;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
