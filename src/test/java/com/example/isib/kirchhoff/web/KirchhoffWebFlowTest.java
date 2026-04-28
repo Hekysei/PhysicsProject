@@ -84,7 +84,7 @@ class KirchhoffWebFlowTest {
             .param("voltageErrorPercent", "1")
             .param("resistorErrorPercent", "2"))
         .andExpect(status().isOk())
-        .andExpect(view().name("kirchhoff-main"))
+        .andExpect(view().name("kirchhoff/kirchhoff-main"))
         .andExpect(model().attributeHasFieldErrors("circuitData", "r3"))
         .andExpect(content().string(containsString("Сопротивление R3 должно быть больше 0.")));
   }
@@ -150,6 +150,6 @@ class KirchhoffWebFlowTest {
   void registerPageRemainsPublic() throws Exception {
     mockMvc.perform(get("/register"))
         .andExpect(status().isOk())
-        .andExpect(view().name("kirchhoff-register"));
+        .andExpect(view().name("kirchhoff/kirchhoff-register"));
   }
 }

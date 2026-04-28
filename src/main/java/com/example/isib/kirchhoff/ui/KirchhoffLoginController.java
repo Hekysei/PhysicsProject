@@ -21,13 +21,13 @@ public class KirchhoffLoginController {
 
   @GetMapping("/login")
   public String login() {
-    return "kirchhoff-login";
+    return "kirchhoff/kirchhoff-login";
   }
 
   @GetMapping("/register")
   public String registerPage(Model model) {
     model.addAttribute("registrationForm", new UserRegistrationForm());
-    return "kirchhoff-register";
+    return "kirchhoff/kirchhoff-register";
   }
 
   @PostMapping("/register")
@@ -36,7 +36,7 @@ public class KirchhoffLoginController {
       BindingResult bindingResult,
       Model model) {
     if (bindingResult.hasErrors()) {
-      return "kirchhoff-register";
+      return "kirchhoff/kirchhoff-register";
     }
 
     try {
@@ -46,7 +46,7 @@ public class KirchhoffLoginController {
       return "redirect:/login?registered";
     } catch (IllegalArgumentException ex) {
       model.addAttribute("errorMessage", ex.getMessage());
-      return "kirchhoff-register";
+      return "kirchhoff/kirchhoff-register";
     }
   }
 }

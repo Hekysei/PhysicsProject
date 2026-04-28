@@ -19,8 +19,8 @@ public class GlobalExceptionHandler {
         "Внутренняя ошибка приложения. Попробуйте повторить действие позже.");
     if (request.getRequestURI().startsWith("/register")) {
       model.addAttribute("registrationForm", new UserRegistrationForm());
-      return "kirchhoff-register";
+      return "kirchhoff/kirchhoff-register";
     }
-    return "kirchhoff-main";
+    return "kirchhoff/kirchhoff-main";
   }
 }

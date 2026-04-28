@@ -31,7 +31,7 @@ public class KirchhoffSimulationController {
   @GetMapping("/kirchhoff")
   public String mainPage(Model model) {
     model.addAttribute("circuitData", new KirchhoffCircuitData());
-    return "kirchhoff-main";
+    return "kirchhoff/kirchhoff-main";
   }
 
   @PostMapping("/kirchhoff")
@@ -40,7 +40,7 @@ public class KirchhoffSimulationController {
       BindingResult bindingResult,
       Model model) {
     if (bindingResult.hasErrors()) {
-      return "kirchhoff-main";
+      return "kirchhoff/kirchhoff-main";
     }
 
     KirchhoffSimulationOutcome outcome = kirchhoffCircuitModel.simulate(circuitData);
@@ -48,6 +48,6 @@ public class KirchhoffSimulationController {
     model.addAttribute("circuitData", circuitData);
     model.addAttribute("effectiveCircuitData", outcome.effectiveData());
     model.addAttribute("results", outcome.results());
-    return "kirchhoff-main";
+    return "kirchhoff/kirchhoff-main";
   }
 }
