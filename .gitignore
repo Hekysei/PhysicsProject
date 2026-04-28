@@ -88,3 +88,6 @@ buildNumber.properties
 # === Тесты и отчеты ===
 /test-output/
 surefire-reports/
+
+# === Runtime данные проекта ===
+data/
