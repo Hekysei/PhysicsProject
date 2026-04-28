@@ -32,7 +32,7 @@ public class KirchhoffSecurityConfiguration {
             .anyRequest().authenticated())
         .formLogin(form -> form
             .loginPage("/login")
-            .defaultSuccessUrl("/", true)
+            .defaultSuccessUrl("/kirchhoff", true)
             .permitAll())
         .logout(logout -> logout
             .logoutSuccessUrl("/login?logout"));
