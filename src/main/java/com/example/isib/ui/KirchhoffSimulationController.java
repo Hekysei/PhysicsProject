@@ -28,13 +28,13 @@ public class KirchhoffSimulationController {
     return LocalDate.now().format(DATE_FORMATTER);
   }
 
-  @GetMapping("/")
+  @GetMapping("/kirchhoff")
   public String mainPage(Model model) {
     model.addAttribute("circuitData", new KirchhoffCircuitData());
     return "kirchhoff-main";
   }
 
-  @PostMapping("/")
+  @PostMapping("/kirchhoff")
   public String calculateCircuit(
       @Valid @ModelAttribute("circuitData") KirchhoffCircuitData circuitData,
       BindingResult bindingResult,
