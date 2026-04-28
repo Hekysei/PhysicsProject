@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/circuits")
+@RequestMapping("/kirchhoff/api/circuits")
 public class KirchhoffSimulationRestController {
 
   private final KirchhoffCircuitModel kirchhoffCircuitModel;
@@ -20,12 +20,12 @@ public class KirchhoffSimulationRestController {
     this.kirchhoffCircuitModel = kirchhoffCircuitModel;
   }
 
-  @GetMapping("/kirchhoff/defaults")
+  @GetMapping("/defaults")
   public KirchhoffCircuitData defaults() {
     return new KirchhoffCircuitData();
   }
 
-  @PostMapping("/kirchhoff")
+  @PostMapping
   public KirchhoffSimulationResponse calculateCircuit(
       @Valid @RequestBody KirchhoffCircuitData circuitData) {
     KirchhoffSimulationOutcome outcome = kirchhoffCircuitModel.simulate(circuitData);

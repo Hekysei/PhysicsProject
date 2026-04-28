@@ -91,7 +91,7 @@ class KirchhoffWebFlowTest {
 
   @Test
   void restApiReturnsValidationErrorsForInvalidRequest() throws Exception {
-    mockMvc.perform(post("/api/circuits/kirchhoff")
+    mockMvc.perform(post("/kirchhoff/api/circuits")
             .with(user("demo").roles("USER"))
             .with(csrf())
             .contentType("application/json")
@@ -116,7 +116,7 @@ class KirchhoffWebFlowTest {
 
   @Test
   void restApiReturnsCalculatedPayload() throws Exception {
-    mockMvc.perform(post("/api/circuits/kirchhoff")
+    mockMvc.perform(post("/kirchhoff/api/circuits")
             .with(user("demo").roles("USER"))
             .with(csrf())
             .contentType("application/json")
