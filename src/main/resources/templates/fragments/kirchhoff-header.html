@@ -2,7 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <body>
 <div class="header" th:fragment="pageHeader">
-    <h1>⚡ Симуляция Законов Кирхгофа</h1>
+    <div class="header-brand">
+        <h1>Симуляция законов Кирхгофа</h1>
+        <p class="header-subtitle">Минималистичный расчет электрической цепи</p>
+    </div>
     <div class="header-right">
         <div class="header-date" th:text="${date}"></div>
         <form th:action="@{/logout}" method="post" class="logout-form">

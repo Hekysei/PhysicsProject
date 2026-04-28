@@ -14,26 +14,34 @@
         <p class="error-text" th:text="${errorMessage}">Ошибка выполнения.</p>
     </div>
 
+    <div class="panel-caption">Параметры расчета</div>
+
     <div class="errors-panel results-panel">
-        <h4>Погрешности входа</h4>
-        <p class="errors-hint">Случайный разброс только номиналов E и резисторов перед расчётом (± от введённого значения).</p>
+        <h4>Погрешности</h4>
+        <p class="errors-hint">Случайный разброс только номиналов E и резисторов перед расчётом, в пределах введенного процента.</p>
         <label class="errors-checkbox">
             <input type="checkbox" th:field="*{errorsEnabled}"/>
             <span>Учитывать погрешности</span>
         </label>
         <div class="errors-fields">
-            <label class="errors-label" for="voltageErrorPercent">Источник E, ±% к U</label>
-            <input type="number" id="voltageErrorPercent" class="sidebar-input" step="0.1" min="0" max="50"
-                   th:field="*{voltageErrorPercent}"/>
-            <small class="field-error" th:if="${#fields.hasErrors('voltageErrorPercent')}" th:errors="*{voltageErrorPercent}">Ошибка</small>
-            <label class="errors-label" for="resistorErrorPercent">Резисторы, ±% к R</label>
-            <input type="number" id="resistorErrorPercent" class="sidebar-input" step="0.1" min="0" max="50"
-                   th:field="*{resistorErrorPercent}"/>
-            <small class="field-error" th:if="${#fields.hasErrors('resistorErrorPercent')}" th:errors="*{resistorErrorPercent}">Ошибка</small>
+            <div class="errors-field">
+                <label class="errors-label" for="voltageErrorPercent">Источник E, ±% к U</label>
+                <input type="number" id="voltageErrorPercent" class="sidebar-input" step="0.1" min="0" max="50"
+                       th:field="*{voltageErrorPercent}"/>
+                <small class="field-error" th:if="${#fields.hasErrors('voltageErrorPercent')}" th:errors="*{voltageErrorPercent}">Ошибка</small>
+            </div>
+            <div class="errors-field">
+                <label class="errors-label" for="resistorErrorPercent">Резисторы, ±% к R</label>
+                <input type="number" id="resistorErrorPercent" class="sidebar-input" step="0.1" min="0" max="50"
+                       th:field="*{resistorErrorPercent}"/>
+                <small class="field-error" th:if="${#fields.hasErrors('resistorErrorPercent')}" th:errors="*{resistorErrorPercent}">Ошибка</small>
+            </div>
         </div>
     </div>
 
-    <button type="submit" class="btn-calculate">Рассчитать цепь</button>
+    <div class="action-panel">
+        <button type="submit" class="btn-calculate">Рассчитать цепь</button>
+    </div>
 
     <div class="results-panel" th:if="${results != null and effectiveCircuitData != null and circuitData.errorsEnabled}">
         <h4>Эффективные значения</h4>
@@ -56,7 +64,7 @@
     </div>
 
     <div class="results-panel" th:if="${results != null}">
-        <h4>📊 Результаты расчёта</h4>
+        <h4>Результаты расчета</h4>
         <table class="results">
             <tbody>
             <tr>
@@ -88,7 +96,7 @@
 
         <div class="laws-container">
             <div class="law-card">
-                <div class="law-name">Первый закон (Узел)</div>
+                <div class="law-name">Первый закон</div>
                 <div class="law-formula">I<sub>вх</sub> = I<sub>R2</sub> + I<sub>R3</sub></div>
                 <div class="law-evaluation">
                     <span class="val" th:text="${#numbers.formatDecimal(results.totalCurrent, 1, 2)}">0</span>
@@ -101,7 +109,7 @@
             </div>
 
             <div class="law-card">
-                <div class="law-name">Второй закон (Контур)</div>
+                <div class="law-name">Второй закон</div>
                 <div class="law-formula">E = U<sub>R1</sub> + U<sub>Блок 1</sub> + U<sub>R4</sub> + U<sub>Блок 2</sub></div>
                 <div class="law-evaluation">
                     <span class="val" th:text="${#numbers.formatDecimal((effectiveCircuitData != null ? effectiveCircuitData.v1 : circuitData.v1), 1, 2)}">0</span>
