@@ -1,6 +1,6 @@
-package com.example.isib;
+package com.example.isib.kirchhoff;
 
-import com.example.isib.auth.FileUserAccountService;
+import com.example.isib.kirchhoff.auth.FileUserAccountService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,8 +23,8 @@ public class KirchhoffSecurityConfiguration {
             .requestMatchers(
                 "/login",
                 "/register",
-                "/css/**",
-                "/js/**",
+                "/kirchhoff/css/**",
+                "/kirchhoff/js/**",
                 "/error",
                 "/swagger-ui/**",
                 "/v3/api-docs/**")

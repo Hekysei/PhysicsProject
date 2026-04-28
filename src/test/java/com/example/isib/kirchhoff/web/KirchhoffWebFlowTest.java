@@ -1,4 +1,4 @@
-package com.example.isib.web;
+package com.example.isib.kirchhoff.web;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
@@ -65,12 +65,12 @@ class KirchhoffWebFlowTest {
 
     mockMvc.perform(formLogin("/login").user("student_user").password("secret123"))
         .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/"));
+        .andExpect(redirectedUrl("/kirchhoff"));
   }
 
   @Test
   void simulationFormShowsValidationErrors() throws Exception {
-    mockMvc.perform(post("/")
+    mockMvc.perform(post("/kirchhoff")
             .with(user("demo").roles("USER"))
             .with(csrf())
             .param("v1", "12")
@@ -84,7 +84,7 @@ class KirchhoffWebFlowTest {
             .param("voltageErrorPercent", "1")
             .param("resistorErrorPercent", "2"))
         .andExpect(status().isOk())
-        .andExpect(view().name("kirchhoff-main"))
+        .andExpect(view().name("kirchhoff/kirchhoff-main"))
         .andExpect(model().attributeHasFieldErrors("circuitData", "r3"))
         .andExpect(content().string(containsString("Сопротивление R3 должно быть больше 0.")));
   }
@@ -150,6 +150,6 @@ class KirchhoffWebFlowTest {
   void registerPageRemainsPublic() throws Exception {
     mockMvc.perform(get("/register"))
         .andExpect(status().isOk())
-        .andExpect(view().name("kirchhoff-register"));
+        .andExpect(view().name("kirchhoff/kirchhoff-register"));
   }
 }

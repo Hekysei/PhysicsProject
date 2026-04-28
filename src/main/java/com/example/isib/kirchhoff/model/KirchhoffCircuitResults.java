@@ -1,4 +1,4 @@
-package com.example.isib.model;
+package com.example.isib.kirchhoff.model;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -109,10 +109,10 @@ features/<project>/
 - `src/main/java/com/example/isib/ui/KirchhoffSimulationController.java`
 - `src/main/java/com/example/isib/api/KirchhoffSimulationRestController.java`
 - `src/main/java/com/example/isib/api/KirchhoffSimulationResponse.java`
-- `src/main/resources/templates/kirchhoff-main.html`
-- `src/main/resources/templates/fragments/kirchhoff-*.html`
-- `src/main/resources/static/css/kirchhoff-style.css`
-- `src/main/resources/static/js/kirchhoff-script.js`
+- `src/main/resources/templates/kirchhoff/kirchhoff-main.html`
+- `src/main/resources/templates/kirchhoff/fragments/kirchhoff-*.html`
+- `src/main/resources/static/kirchhoff/css/kirchhoff-style.css`
+- `src/main/resources/static/kirchhoff/js/kirchhoff-script.js`
 - `src/test/java/com/example/isib/model/KirchhoffCircuitModelTest.java`
 
 Это и есть основная feature-область: собственная бизнес-логика Кирхгофа и её UI/API-обвязка.
@@ -125,8 +125,8 @@ features/<project>/
 - `src/main/java/com/example/isib/auth/FileUserAccountService.java`
 - `src/main/java/com/example/isib/auth/UserRegistrationForm.java`
 - `src/main/java/com/example/isib/ui/KirchhoffLoginController.java`
-- `src/main/resources/templates/kirchhoff-login.html`
-- `src/main/resources/templates/kirchhoff-register.html`
+- `src/main/resources/templates/kirchhoff/kirchhoff-login.html`
+- `src/main/resources/templates/kirchhoff/kirchhoff-register.html`
 Если у каждого проекта авторизация своя, эти классы должны жить в рамках feature-зоны, а не превращаться в общий auth layer.
 
 ### Do Not Carry Over As Standalone App Assumptions

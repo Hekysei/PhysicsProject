@@ -1,6 +1,6 @@
-package com.example.isib.ui;
+package com.example.isib.kirchhoff.ui;
 
-import com.example.isib.auth.UserRegistrationForm;
+import com.example.isib.kirchhoff.auth.UserRegistrationForm;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -19,8 +19,8 @@ public class GlobalExceptionHandler {
         "Внутренняя ошибка приложения. Попробуйте повторить действие позже.");
     if (request.getRequestURI().startsWith("/register")) {
       model.addAttribute("registrationForm", new UserRegistrationForm());
-      return "kirchhoff-register";
+      return "kirchhoff/kirchhoff-register";
     }
-    return "kirchhoff-main";
+    return "kirchhoff/kirchhoff-main";
   }
 }

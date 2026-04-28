@@ -1,8 +1,8 @@
-package com.example.isib.api;
+package com.example.isib.kirchhoff.api;
 
-import com.example.isib.model.KirchhoffCircuitData;
-import com.example.isib.model.KirchhoffCircuitResults;
-import com.example.isib.model.KirchhoffSimulationOutcome;
+import com.example.isib.kirchhoff.model.KirchhoffCircuitData;
+import com.example.isib.kirchhoff.model.KirchhoffCircuitResults;
+import com.example.isib.kirchhoff.model.KirchhoffSimulationOutcome;
 
 public record KirchhoffSimulationResponse(
     KirchhoffCircuitData requestedData,

@@ -1,4 +1,4 @@
-package com.example.isib.model;
+package com.example.isib.kirchhoff.model;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;

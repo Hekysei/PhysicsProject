@@ -1,4 +1,4 @@
-package com.example.isib.api;
+package com.example.isib.kirchhoff.api;
 
 import java.util.Map;
 import java.util.stream.Collectors;

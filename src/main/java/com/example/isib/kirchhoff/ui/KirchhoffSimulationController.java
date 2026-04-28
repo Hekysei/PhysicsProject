@@ -1,8 +1,8 @@
-package com.example.isib.ui;
+package com.example.isib.kirchhoff.ui;
 
-import com.example.isib.model.KirchhoffCircuitData;
-import com.example.isib.model.KirchhoffCircuitModel;
-import com.example.isib.model.KirchhoffSimulationOutcome;
+import com.example.isib.kirchhoff.model.KirchhoffCircuitData;
+import com.example.isib.kirchhoff.model.KirchhoffCircuitModel;
+import com.example.isib.kirchhoff.model.KirchhoffSimulationOutcome;
 import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -31,7 +31,7 @@ public class KirchhoffSimulationController {
   @GetMapping("/kirchhoff")
   public String mainPage(Model model) {
     model.addAttribute("circuitData", new KirchhoffCircuitData());
-    return "kirchhoff-main";
+    return "kirchhoff/kirchhoff-main";
   }
 
   @PostMapping("/kirchhoff")
@@ -40,7 +40,7 @@ public class KirchhoffSimulationController {
       BindingResult bindingResult,
       Model model) {
     if (bindingResult.hasErrors()) {
-      return "kirchhoff-main";
+      return "kirchhoff/kirchhoff-main";
     }
 
     KirchhoffSimulationOutcome outcome = kirchhoffCircuitModel.simulate(circuitData);
@@ -48,6 +48,6 @@ public class KirchhoffSimulationController {
     model.addAttribute("circuitData", circuitData);
     model.addAttribute("effectiveCircuitData", outcome.effectiveData());
     model.addAttribute("results", outcome.results());
-    return "kirchhoff-main";
+    return "kirchhoff/kirchhoff-main";
   }
 }
