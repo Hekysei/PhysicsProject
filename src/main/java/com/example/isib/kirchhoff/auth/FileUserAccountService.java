@@ -1,6 +1,5 @@
 package com.example.isib.kirchhoff.auth;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -27,16 +26,15 @@ public class FileUserAccountService implements UserDetailsService {
   private static final int MAX_USERNAME_LENGTH = 64;
   private static final int MIN_PASSWORD_LENGTH = 8;
   private static final int MAX_PASSWORD_LENGTH = 128;
+  private static final String USERS_FILE_PATH = "data/kirchhoff-physics-project-users.txt";
 
   private final PasswordEncoder passwordEncoder;
   private final Path usersFilePath;
   private final ReadWriteLock storageLock = new ReentrantReadWriteLock();
 
-  public FileUserAccountService(
-      PasswordEncoder passwordEncoder,
-      @Value("${app.security.users-file:data/kirchhoff-users.txt}") String usersFilePath) {
+  public FileUserAccountService(PasswordEncoder passwordEncoder) {
     this.passwordEncoder = passwordEncoder;
-    this.usersFilePath = Path.of(usersFilePath);
+    this.usersFilePath = Path.of(USERS_FILE_PATH);
   }
 
   @Override

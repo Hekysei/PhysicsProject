@@ -55,15 +55,15 @@ class KirchhoffWebFlowTest {
 
   @Test
   void registerAndLoginFlowWorks() throws Exception {
-    mockMvc.perform(post("/register")
+    mockMvc.perform(post("/kirchhoff/register")
             .with(csrf())
             .param("username", "student_user")
             .param("password", "secret123")
             .param("confirmPassword", "secret123"))
         .andExpect(status().is3xxRedirection())
-        .andExpect(redirectedUrl("/login?registered"));
+        .andExpect(redirectedUrl("/kirchhoff/login?registered"));
 
-    mockMvc.perform(formLogin("/login").user("student_user").password("secret123"))
+    mockMvc.perform(formLogin("/kirchhoff/login").user("student_user").password("secret123"))
         .andExpect(status().is3xxRedirection())
         .andExpect(redirectedUrl("/kirchhoff"));
   }
@@ -142,13 +142,13 @@ class KirchhoffWebFlowTest {
 
   @Test
   void loginPageRemainsPublic() throws Exception {
-    mockMvc.perform(get("/login"))
+    mockMvc.perform(get("/kirchhoff/login"))
         .andExpect(status().isOk());
   }
 
   @Test
   void registerPageRemainsPublic() throws Exception {
-    mockMvc.perform(get("/register"))
+    mockMvc.perform(get("/kirchhoff/register"))
         .andExpect(status().isOk())
         .andExpect(view().name("kirchhoff/kirchhoff-register"));
   }
