@@ -48,9 +48,9 @@ function initSidebarResize() {
     if (!container || !sidebar || !resizer) return;
 
     var root = document.documentElement;
-    var storageKey = 'kirchhoff-sidebar-width';
+    var storageKey = 'kirchhoff-sidebar-width-v2';
     var mediaQuery = window.matchMedia('(max-width: 1220px)');
-    var minWidth = 420;
+    var minWidth = 360;
 
     function getMaxWidth() {
         return Math.max(minWidth, Math.floor(window.innerWidth / 2));

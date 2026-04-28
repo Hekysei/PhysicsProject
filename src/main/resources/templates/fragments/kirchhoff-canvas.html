@@ -68,8 +68,6 @@
                 <span class="input-unit">Ом</span>
             </div>
         </foreignObject>
-        <text x="130" y="180" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.totalCurrent), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
-        <text x="130" y="195" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageR1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
         <text x="260" y="75" text-anchor="middle" class="resistor-name">R2</text>
         <rect x="230" y="85" width="60" height="30" class="component-box" />
@@ -79,8 +77,6 @@
                 <span class="input-unit">Ом</span>
             </div>
         </foreignObject>
-        <text x="260" y="130" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR2), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
-        <text x="260" y="145" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
         <text x="260" y="175" text-anchor="middle" class="resistor-name">R3</text>
         <rect x="230" y="185" width="60" height="30" class="component-box" />
@@ -90,8 +86,6 @@
                 <span class="input-unit">Ом</span>
             </div>
         </foreignObject>
-        <text x="260" y="230" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR3), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
-        <text x="260" y="245" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock1), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
         <text x="380" y="125" text-anchor="middle" class="resistor-name">R4</text>
         <rect x="350" y="135" width="60" height="30" class="component-box" />
@@ -101,8 +95,6 @@
                 <span class="input-unit">Ом</span>
             </div>
         </foreignObject>
-        <text x="380" y="180" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.totalCurrent), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
-        <text x="380" y="195" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageR4), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
         <text x="510" y="75" text-anchor="middle" class="resistor-name">R5</text>
         <rect x="480" y="85" width="60" height="30" class="component-box" />
@@ -112,8 +104,6 @@
                 <span class="input-unit">Ом</span>
             </div>
         </foreignObject>
-        <text x="510" y="130" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR5), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
-        <text x="510" y="145" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock2), 1, 1) + 'V' : '0.0V'}">0.0V</text>
 
         <text x="510" y="175" text-anchor="middle" class="resistor-name">R6</text>
         <rect x="480" y="185" width="60" height="30" class="component-box" />
@@ -123,8 +113,6 @@
                 <span class="input-unit">Ом</span>
             </div>
         </foreignObject>
-        <text x="510" y="230" text-anchor="middle" class="value-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.currentR6), 1, 1) + 'mA' : '0.0mA'}">0.0mA</text>
-        <text x="510" y="245" text-anchor="middle" class="volt-label" th:text="${results != null ? #numbers.formatDecimal(T(java.lang.Math).abs(results.voltageBlock2), 1, 1) + 'V' : '0.0V'}">0.0V</text>
     </svg>
 
     <div class="field-errors-inline" th:if="${#fields.hasErrors('v1') or #fields.hasErrors('r1') or #fields.hasErrors('r2') or #fields.hasErrors('r3') or #fields.hasErrors('r4') or #fields.hasErrors('r5') or #fields.hasErrors('r6')}">

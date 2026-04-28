@@ -2,23 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 <body>
 <div class="sidebar" th:fragment="sidebar">
-    <div class="results-panel form-alert" th:if="${#fields.hasAnyErrors()}">
-        <h4>Проверьте входные данные</h4>
-        <ul class="error-list">
+    <div class="results-panel form-alert" th:if="${#fields.hasAnyErrors() or errorMessage != null}">
+        <h4>Проверьте данные</h4>
+        <ul class="error-list" th:if="${#fields.hasAnyErrors()}">
             <li th:each="error : ${#fields.errors('*')}" th:text="${error}">Ошибка валидации</li>
         </ul>
+        <p class="error-text" th:if="${errorMessage != null}" th:text="${errorMessage}">Ошибка выполнения.</p>
     </div>
-
-    <div class="results-panel form-alert" th:if="${errorMessage != null}">
-        <h4>Ошибка</h4>
-        <p class="error-text" th:text="${errorMessage}">Ошибка выполнения.</p>
-    </div>
-
-    <div class="panel-caption">Параметры расчета</div>
 
     <div class="errors-panel results-panel">
-        <h4>Погрешности</h4>
-        <p class="errors-hint">Случайный разброс только номиналов E и резисторов перед расчётом, в пределах введенного процента.</p>
+        <h4>Параметры</h4>
         <label class="errors-checkbox">
             <input type="checkbox" th:field="*{errorsEnabled}"/>
             <span>Учитывать погрешности</span>
@@ -37,34 +30,33 @@
                 <small class="field-error" th:if="${#fields.hasErrors('resistorErrorPercent')}" th:errors="*{resistorErrorPercent}">Ошибка</small>
             </div>
         </div>
-    </div>
-
-    <div class="action-panel">
         <button type="submit" class="btn-calculate">Рассчитать цепь</button>
     </div>
 
-    <div class="results-panel" th:if="${results != null and effectiveCircuitData != null and circuitData.errorsEnabled}">
-        <h4>Эффективные значения</h4>
-        <table class="results">
-            <tbody>
-            <tr>
-                <td>E расч.</td>
-                <td><span th:text="${#numbers.formatDecimal(effectiveCircuitData.v1, 1, 2)}">0</span><span class="unit">V</span></td>
-            </tr>
-            <tr>
-                <td>R2 || R3</td>
-                <td><span th:text="${#numbers.formatDecimal(effectiveCircuitData.r2, 1, 2)}">0</span> / <span th:text="${#numbers.formatDecimal(effectiveCircuitData.r3, 1, 2)}">0</span><span class="unit">Ω</span></td>
-            </tr>
-            <tr>
-                <td>R5 || R6</td>
-                <td><span th:text="${#numbers.formatDecimal(effectiveCircuitData.r5, 1, 2)}">0</span> / <span th:text="${#numbers.formatDecimal(effectiveCircuitData.r6, 1, 2)}">0</span><span class="unit">Ω</span></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
     <div class="results-panel" th:if="${results != null}">
-        <h4>Результаты расчета</h4>
+        <h4>Результаты</h4>
+        <div class="results-group" th:if="${effectiveCircuitData != null and circuitData.errorsEnabled}">
+            <div class="results-group-title">Эффективные значения</div>
+            <table class="results">
+                <tbody>
+                <tr>
+                    <td>E расч.</td>
+                    <td><span th:text="${#numbers.formatDecimal(effectiveCircuitData.v1, 1, 2)}">0</span><span class="unit">V</span></td>
+                </tr>
+                <tr>
+                    <td>R2 || R3</td>
+                    <td><span th:text="${#numbers.formatDecimal(effectiveCircuitData.r2, 1, 2)}">0</span> / <span th:text="${#numbers.formatDecimal(effectiveCircuitData.r3, 1, 2)}">0</span><span class="unit">Ω</span></td>
+                </tr>
+                <tr>
+                    <td>R5 || R6</td>
+                    <td><span th:text="${#numbers.formatDecimal(effectiveCircuitData.r5, 1, 2)}">0</span> / <span th:text="${#numbers.formatDecimal(effectiveCircuitData.r6, 1, 2)}">0</span><span class="unit">Ω</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="results-group">
+            <div class="results-group-title">Расчет цепи</div>
         <table class="results">
             <tbody>
             <tr>
@@ -93,35 +85,42 @@
             </tr>
             </tbody>
         </table>
+        </div>
 
         <div class="laws-container">
-            <div class="law-card">
+            <div class="law-row">
                 <div class="law-name">Первый закон</div>
-                <div class="law-formula">I<sub>вх</sub> = I<sub>R2</sub> + I<sub>R3</sub></div>
                 <div class="law-evaluation">
+                    <span class="law-formula">I<sub>вх</sub></span>
                     <span class="val" th:text="${#numbers.formatDecimal(results.totalCurrent, 1, 2)}">0</span>
                     <span class="eq">=</span>
+                    <span class="law-formula">I<sub>R2</sub></span>
                     <span class="val" th:text="${#numbers.formatDecimal(results.currentR2, 1, 2)}">0</span>
                     <span class="eq">+</span>
+                    <span class="law-formula">I<sub>R3</sub></span>
                     <span class="val" th:text="${#numbers.formatDecimal(results.currentR3, 1, 2)}">0</span>
-                    <span class="unit" style="margin-left: 5px; color: var(--text-muted);">(mA)</span>
+                    <span class="law-unit">(mA)</span>
                 </div>
             </div>
 
-            <div class="law-card">
+            <div class="law-row">
                 <div class="law-name">Второй закон</div>
-                <div class="law-formula">E = U<sub>R1</sub> + U<sub>Блок 1</sub> + U<sub>R4</sub> + U<sub>Блок 2</sub></div>
                 <div class="law-evaluation">
+                    <span class="law-formula">E</span>
                     <span class="val" th:text="${#numbers.formatDecimal((effectiveCircuitData != null ? effectiveCircuitData.v1 : circuitData.v1), 1, 2)}">0</span>
                     <span class="eq">=</span>
+                    <span class="law-formula">U<sub>R1</sub></span>
                     <span class="val" th:text="${#numbers.formatDecimal(results.voltageR1, 1, 2)}">0</span>
                     <span class="eq">+</span>
+                    <span class="law-formula">U<sub>Блок 1</sub></span>
                     <span class="val" th:text="${#numbers.formatDecimal(results.voltageBlock1, 1, 2)}">0</span>
                     <span class="eq">+</span>
+                    <span class="law-formula">U<sub>R4</sub></span>
                     <span class="val" th:text="${#numbers.formatDecimal(results.voltageR4, 1, 2)}">0</span>
                     <span class="eq">+</span>
+                    <span class="law-formula">U<sub>Блок 2</sub></span>
                     <span class="val" th:text="${#numbers.formatDecimal(results.voltageBlock2, 1, 2)}">0</span>
-                    <span class="unit" style="margin-left: 5px; color: var(--text-muted);">(V)</span>
+                    <span class="law-unit">(V)</span>
                 </div>
             </div>
         </div>

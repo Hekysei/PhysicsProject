@@ -15,7 +15,7 @@
     --result-value: #dbeafe;
     --result-unit: #94a3b8;
     --danger-color: #f87171;
-    --sidebar-width: 760px;
+    --sidebar-width: 608px;
 }
 
 body {
@@ -88,7 +88,7 @@ body {
 
 .sidebar {
     width: var(--sidebar-width);
-    min-width: 420px;
+    min-width: 360px;
     max-width: 50vw;
     flex: 0 0 var(--sidebar-width);
     background-color: rgba(17, 24, 33, 0.75);
@@ -168,18 +168,6 @@ svg {
 .btn-calculate:hover { background: var(--accent-hover); box-shadow: 0 14px 30px rgba(79, 140, 255, 0.24); }
 .btn-calculate:active { transform: scale(0.98); }
 
-.action-panel {
-    padding: 0;
-}
-
-.panel-caption {
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-
 .errors-hint {
     margin: 0 0 8px 0;
     font-size: 0.78rem;
@@ -202,6 +190,34 @@ svg {
     height: 18px;
     accent-color: var(--accent-color);
     cursor: pointer;
+}
+
+.errors-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.results-group {
+    margin-top: 10px;
+}
+
+.results-group:first-of-type {
+    margin-top: 0;
+}
+
+.results-group-title {
+    margin: 0 0 6px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.error-text + .error-list,
+.error-list + .error-text {
+    margin-top: 8px;
 }
 
 .errors-fields {
@@ -303,25 +319,23 @@ svg {
 .results td:last-child { color: var(--result-value); font-weight: 600; text-align: right; font-family: 'Consolas', monospace; font-size: 0.9rem; border-radius: 0 6px 6px 0; }
 .unit { color: var(--result-unit); font-size: 0.8em; margin-left: 4px; font-weight: normal; }
 
-/* Красивые карточки для Законов Кирхгофа */
 .laws-container {
     margin-top: 12px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 8px;
 }
 
-.law-card {
-    background: rgba(79, 140, 255, 0.05);
-    border: 1px solid rgba(79, 140, 255, 0.18);
-    border-left: 3px solid var(--accent-color);
+.law-row {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border-soft);
     border-radius: 12px;
     padding: 9px 10px;
 }
 
 .law-name {
     font-size: 0.78rem;
-    color: var(--accent-color);
+    color: var(--text-muted);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -330,11 +344,8 @@ svg {
 
 .law-formula {
     font-family: 'Consolas', monospace;
-    color: #fff;
-    font-size: 0.84rem;
-    margin-bottom: 6px;
-    padding-bottom: 6px;
-    border-bottom: 1px dashed rgba(255,255,255,0.08);
+    color: var(--text-muted);
+    font-size: 0.76rem;
 }
 
 .law-evaluation {
@@ -349,12 +360,11 @@ svg {
 
 .law-evaluation .val { color: var(--result-value); font-weight: bold; }
 .law-evaluation .eq { color: var(--text-muted); margin: 0 2px; }
+.law-unit { margin-left: 4px; color: var(--text-muted); }
 
 /* Графика SVG */
 .wire { stroke: var(--wire-color); stroke-width: 2.5; fill: none; transition: stroke 0.5s; stroke-linecap: round; stroke-linejoin: round; }
 .component-box { fill: #131a22; stroke: rgba(79, 140, 255, 0.8); stroke-width: 1.6; rx: 8; }
-.value-label { fill: var(--result-value); font-size: 13px; font-weight: bold; font-family: 'Consolas', monospace; }
-.volt-label { fill: #9fbfff; font-size: 11px; font-family: 'Consolas', monospace; }
 .resistor-name { fill: #fff; font-size: 12px; font-weight: 600; font-family: 'Segoe UI', sans-serif; letter-spacing: 0.08em; }
 .arrow-fill { fill: var(--wire-color); transition: fill 0.5s; }
 
@@ -608,8 +618,7 @@ input[type="number"] {
         padding: 18px;
     }
 
-    .errors-fields,
-    .laws-container {
+    .errors-fields {
         grid-template-columns: 1fr;
     }
 
