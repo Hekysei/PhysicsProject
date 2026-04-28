@@ -47,4 +47,5 @@ project-root/
 
 - [ ] Весь код модуля находится в `src/main/.../featureX`.
 - [ ] Все тесты модуля находятся в `src/test/.../featureX`.
-- [ ] Все ресурсы (templates/static/) лежат в `featureX` подпапках.
+- [ ] Все ресурсы лежат в `src/resources/( templates , static )/featureX`.
+- [ ] Весь маппинг адрессов строго через `/featureX`
