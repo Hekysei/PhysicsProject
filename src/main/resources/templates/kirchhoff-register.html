@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация — Симуляция Кирхгофа</title>
+    <link rel="stylesheet" th:href="@{/css/kirchhoff-style.css}">
+</head>
+<body class="login-body">
+
+<div class="login-card">
+    <h1 class="login-title">Регистрация</h1>
+    <p class="login-subtitle">Создание аккаунта для проекта Kirchhoff</p>
+
+    <div class="login-alert login-alert-error" th:if="${errorMessage != null}" th:text="${errorMessage}">
+        Ошибка регистрации.
+    </div>
+
+    <form class="login-form" th:action="@{/register}" th:object="${registrationForm}" method="post">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <div class="login-alert login-alert-error" th:if="${#fields.hasAnyErrors()}">
+            <ul class="error-list">
+                <li th:each="error : ${#fields.errors('*')}" th:text="${error}">Ошибка валидации.</li>
+            </ul>
+        </div>
+        <label class="login-label" for="username">Имя пользователя</label>
+        <input class="login-input" id="username" th:field="*{username}" type="text" autocomplete="username"
+               required autofocus>
+        <small class="field-error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Ошибка</small>
+
+        <label class="login-label" for="password">Пароль</label>
+        <input class="login-input" id="password" th:field="*{password}" type="password"
+               autocomplete="new-password" required>
+        <small class="field-error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Ошибка</small>
+
+        <label class="login-label" for="confirmPassword">Повторите пароль</label>
+        <input class="login-input" id="confirmPassword" th:field="*{confirmPassword}" type="password"
+               autocomplete="new-password" required>
+        <small class="field-error" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Ошибка</small>
+
+        <button class="btn-calculate login-submit" type="submit">Зарегистрироваться</button>
+    </form>
+
+    <p class="login-switch">
+        Уже есть аккаунт?
+        <a th:href="@{/login}">Войти</a>
+    </p>
+</div>
+
+</body>
+</html>

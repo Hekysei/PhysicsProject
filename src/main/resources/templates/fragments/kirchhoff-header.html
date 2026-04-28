@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<body>
+<div class="header" th:fragment="pageHeader">
+    <div class="header-brand">
+        <h1>Симуляция законов Кирхгофа</h1>
+    </div>
+    <div class="header-right">
+        <div class="header-date" th:text="${date}"></div>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="btn-logout">Выйти</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
