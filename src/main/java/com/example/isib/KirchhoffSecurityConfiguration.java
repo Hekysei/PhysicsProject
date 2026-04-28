@@ -20,7 +20,15 @@ public class KirchhoffSecurityConfiguration {
         .csrf(csrf -> csrf
             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/login", "/register", "/css/**", "/js/**", "/error").permitAll()
+            .requestMatchers(
+                "/login",
+                "/register",
+                "/css/**",
+                "/js/**",
+                "/error",
+                "/swagger-ui/**",
+                "/v3/api-docs/**")
+            .permitAll()
             .anyRequest().authenticated())
         .formLogin(form -> form
             .loginPage("/login")

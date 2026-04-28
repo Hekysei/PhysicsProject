@@ -1,11 +1,14 @@
 package com.example.isib.ui;
 
 import com.example.isib.auth.FileUserAccountService;
+import com.example.isib.auth.UserRegistrationForm;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class KirchhoffLoginController {
@@ -22,28 +25,27 @@ public class KirchhoffLoginController {
   }
 
   @GetMapping("/register")
-  public String registerPage() {
+  public String registerPage(Model model) {
+    model.addAttribute("registrationForm", new UserRegistrationForm());
     return "kirchhoff-register";
   }
 
   @PostMapping("/register")
   public String register(
-      @RequestParam String username,
-      @RequestParam String password,
-      @RequestParam("confirmPassword") String confirmPassword,
+      @Valid @ModelAttribute("registrationForm") UserRegistrationForm registrationForm,
+      BindingResult bindingResult,
       Model model) {
-    if (!password.equals(confirmPassword)) {
-      model.addAttribute("errorMessage", "Пароли не совпадают.");
-      model.addAttribute("username", username);
+    if (bindingResult.hasErrors()) {
       return "kirchhoff-register";
     }
 
     try {
-      fileUserAccountService.registerUser(username, password);
+      fileUserAccountService.registerUser(
+          registrationForm.getUsername(),
+          registrationForm.getPassword());
       return "redirect:/login?registered";
     } catch (IllegalArgumentException ex) {
       model.addAttribute("errorMessage", ex.getMessage());
-      model.addAttribute("username", username);
       return "kirchhoff-register";
     }
   }

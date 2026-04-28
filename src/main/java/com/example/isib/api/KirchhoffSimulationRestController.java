@@ -1,40 +1,34 @@
 package com.example.isib.api;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.ui.Model;
+import com.example.isib.model.KirchhoffCircuitData;
+import com.example.isib.model.KirchhoffCircuitModel;
+import com.example.isib.model.KirchhoffSimulationOutcome;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.example.isib.model.KirchhoffCircuitData;
-import com.example.isib.model.KirchhoffCircuitResults;
-import com.example.isib.model.KirchhoffCircuitModel;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/circuits")
 public class KirchhoffSimulationRestController {
 
-  @Autowired
-  private KirchhoffCircuitModel kirchhoffCircuitModel;
+  private final KirchhoffCircuitModel kirchhoffCircuitModel;
 
-  @GetMapping("/rest_main")
-  public String MainPage(Model model) {
-    KirchhoffCircuitData circuitData = new KirchhoffCircuitData();
-
-    model.addAttribute("circuitData", circuitData);
-    model.addAttribute("date", LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
-    return "kirchhoff-main";
+  public KirchhoffSimulationRestController(KirchhoffCircuitModel kirchhoffCircuitModel) {
+    this.kirchhoffCircuitModel = kirchhoffCircuitModel;
   }
 
-  @PostMapping("/rest_main")
-  public String calculateCircuit(@ModelAttribute KirchhoffCircuitData circuitData, Model model) {
-    KirchhoffCircuitResults results = kirchhoffCircuitModel.calculate(circuitData);
+  @GetMapping("/kirchhoff/defaults")
+  public KirchhoffCircuitData defaults() {
+    return new KirchhoffCircuitData();
+  }
 
-    model.addAttribute("circuitData", circuitData);
-    model.addAttribute("results", results);
-    model.addAttribute("date", LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
-    return "kirchhoff-main";
+  @PostMapping("/kirchhoff")
+  public KirchhoffSimulationResponse calculateCircuit(
+      @Valid @RequestBody KirchhoffCircuitData circuitData) {
+    KirchhoffSimulationOutcome outcome = kirchhoffCircuitModel.simulate(circuitData);
+    return KirchhoffSimulationResponse.from(outcome);
   }
 }

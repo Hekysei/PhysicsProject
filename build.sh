@@ -1,1 +1,4 @@
-mvn clean package
+#!/usr/bin/env bash
+set -euo pipefail
+
+./mvnw clean package

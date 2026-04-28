@@ -39,6 +39,18 @@ body {
 
 .header h1 { margin: 0; font-weight: 500; font-size: 1.4rem; color: #fff; letter-spacing: 0.5px; }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-date {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
 .container {
     display: flex;
     flex-direction: row;
@@ -171,6 +183,43 @@ svg {
     font-weight: 600;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 10px;
+}
+
+.form-alert {
+    border-left: 4px solid #da3633;
+}
+
+.error-list {
+    margin: 0;
+    padding-left: 18px;
+    color: #ffb4a9;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.error-text {
+    margin: 0;
+    color: #ffb4a9;
+    line-height: 1.5;
+}
+
+.field-error {
+    display: block;
+    margin-top: 4px;
+    color: #ff7b72;
+    font-size: 0.8rem;
+    line-height: 1.3;
+}
+
+.field-errors-inline {
+    position: absolute;
+    left: 24px;
+    bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 360px;
 }
 
 .results { width: 100%; border-collapse: separate; border-spacing: 0 6px; font-size: 0.95em; }

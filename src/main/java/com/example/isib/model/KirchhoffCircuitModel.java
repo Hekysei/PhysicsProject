@@ -12,33 +12,28 @@ public class KirchhoffCircuitModel {
      * @param data Входные параметры цепи
      * @return Результаты расчёта
      */
-    public KirchhoffCircuitResults calculate(KirchhoffCircuitData data) {
+    public KirchhoffSimulationOutcome simulate(KirchhoffCircuitData data) {
+        validateInput(data);
+
+        KirchhoffCircuitData requestedData = new KirchhoffCircuitData(data);
+        KirchhoffCircuitData effectiveData = applyInputError(requestedData);
         KirchhoffCircuitResults results = new KirchhoffCircuitResults();
-        KirchhoffErrorRate err = new KirchhoffErrorRate();
-        err.setActive(data.isErrorsEnabled());
-        err.setVoltageRelativeError(clampPercentToFraction(data.getVoltageErrorPercent()));
-        err.setResistorRelativeError(clampPercentToFraction(data.getResistorErrorPercent()));
 
-        double v1 = err.applyVoltageSourceError(data.getV1());
-        double r1 = err.applyResistorNominalError(data.getR1());
-        double r2 = err.applyResistorNominalError(data.getR2());
-        double r3 = err.applyResistorNominalError(data.getR3());
-        double r4 = err.applyResistorNominalError(data.getR4());
-        double r5 = err.applyResistorNominalError(data.getR5());
-        double r6 = err.applyResistorNominalError(data.getR6());
-
-        data.setV1(v1);
-        data.setR1(r1);
-        data.setR2(r2);
-        data.setR3(r3);
-        data.setR4(r4);
-        data.setR5(r5);
-        data.setR6(r6);
+        double v1 = effectiveData.getV1();
+        double r1 = effectiveData.getR1();
+        double r2 = effectiveData.getR2();
+        double r3 = effectiveData.getR3();
+        double r4 = effectiveData.getR4();
+        double r5 = effectiveData.getR5();
+        double r6 = effectiveData.getR6();
 
         double rBlock1 = calculateParallelResistance(r2, r3);
         double rBlock2 = calculateParallelResistance(r5, r6);
 
         results.setTotalResistance(r1 + rBlock1 + r4 + rBlock2);
+        if (results.getTotalResistance() <= 0) {
+            throw new IllegalArgumentException("Общее сопротивление цепи должно быть больше 0.");
+        }
 
         double totalCurrentAmps = v1 / results.getTotalResistance();
         results.setTotalCurrent(totalCurrentAmps * 1000);
@@ -54,14 +49,18 @@ public class KirchhoffCircuitModel {
         results.setCurrentR6((results.getVoltageBlock2() / r6) * 1000);
 
         results.setKclValid(validateKCL(results));
-        results.setKvlValid(validateKVL(data, results));
+        results.setKvlValid(validateKVL(effectiveData, results));
 
-        return results;
+        return new KirchhoffSimulationOutcome(requestedData, effectiveData, results);
+    }
+
+    public KirchhoffCircuitResults calculate(KirchhoffCircuitData data) {
+        return simulate(data).results();
     }
 
     private double calculateParallelResistance(Double r1, Double r2) {
-        if (r1 == null || r2 == null || r1 == 0 || r2 == 0) {
-            return 0;
+        if (r1 == null || r2 == null || r1 <= 0 || r2 <= 0) {
+            throw new IllegalArgumentException("Сопротивления параллельной ветви должны быть больше 0.");
         }
         return (r1 * r2) / (r1 + r2);
     }
@@ -102,5 +101,43 @@ public class KirchhoffCircuitModel {
             return MAX_ERROR_PERCENT / 100.0;
         }
         return percent / 100.0;
+    }
+
+    private static void validateInput(KirchhoffCircuitData data) {
+        if (data == null) {
+            throw new IllegalArgumentException("Данные цепи обязательны.");
+        }
+        if (Math.abs(data.getV1()) < 0.01) {
+            throw new IllegalArgumentException("Напряжение источника не должно быть равно 0.");
+        }
+        validateResistance("R1", data.getR1());
+        validateResistance("R2", data.getR2());
+        validateResistance("R3", data.getR3());
+        validateResistance("R4", data.getR4());
+        validateResistance("R5", data.getR5());
+        validateResistance("R6", data.getR6());
+    }
+
+    private static void validateResistance(String label, double resistance) {
+        if (resistance <= 0) {
+            throw new IllegalArgumentException("Сопротивление " + label + " должно быть больше 0.");
+        }
+    }
+
+    private static KirchhoffCircuitData applyInputError(KirchhoffCircuitData data) {
+        KirchhoffErrorRate err = new KirchhoffErrorRate();
+        err.setActive(data.isErrorsEnabled());
+        err.setVoltageRelativeError(clampPercentToFraction(data.getVoltageErrorPercent()));
+        err.setResistorRelativeError(clampPercentToFraction(data.getResistorErrorPercent()));
+
+        KirchhoffCircuitData adjusted = new KirchhoffCircuitData(data);
+        adjusted.setV1(err.applyVoltageSourceError(data.getV1()));
+        adjusted.setR1(err.applyResistorNominalError(data.getR1()));
+        adjusted.setR2(err.applyResistorNominalError(data.getR2()));
+        adjusted.setR3(err.applyResistorNominalError(data.getR3()));
+        adjusted.setR4(err.applyResistorNominalError(data.getR4()));
+        adjusted.setR5(err.applyResistorNominalError(data.getR5()));
+        adjusted.setR6(err.applyResistorNominalError(data.getR6()));
+        return adjusted;
     }
 }
