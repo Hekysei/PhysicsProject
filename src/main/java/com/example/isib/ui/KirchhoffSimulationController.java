@@ -6,35 +6,35 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.isib.model.CircuitData;
-import com.example.isib.model.CircuitResults;
-import com.example.isib.model.CircuitModel;
+import com.example.isib.model.KirchhoffCircuitData;
+import com.example.isib.model.KirchhoffCircuitResults;
+import com.example.isib.model.KirchhoffCircuitModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
 @Controller
-public class SimulationController {
+public class KirchhoffSimulationController {
 
   @Autowired
-  private CircuitModel circuitModel;
+  private KirchhoffCircuitModel kirchhoffCircuitModel;
 
   @GetMapping("/")
   public String MainPage(Model model) {
-    CircuitData circuitData = new CircuitData();
+    KirchhoffCircuitData circuitData = new KirchhoffCircuitData();
 
     model.addAttribute("circuitData", circuitData);
     model.addAttribute("date", LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
-    return "main";
+    return "kirchhoff-main";
   }
 
   @PostMapping("/")
-  public String calculateCircuit(@ModelAttribute CircuitData circuitData, Model model) {
-    CircuitResults results = circuitModel.calculate(circuitData);
+  public String calculateCircuit(@ModelAttribute KirchhoffCircuitData circuitData, Model model) {
+    KirchhoffCircuitResults results = kirchhoffCircuitModel.calculate(circuitData);
 
     model.addAttribute("circuitData", circuitData);
     model.addAttribute("results", results);
     model.addAttribute("date", LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
-    return "main";
+    return "kirchhoff-main";
   }
 }

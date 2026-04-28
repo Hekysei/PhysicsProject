@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CircuitResults {
+public class KirchhoffCircuitResults {
     private double totalResistance;
     private double totalCurrent;
     private double voltageR1;
@@ -19,5 +19,5 @@ public class CircuitResults {
     private Boolean kclValid;
     private Boolean kvlValid;
     
-    public CircuitResults() {}
+    public KirchhoffCircuitResults() {}
 }

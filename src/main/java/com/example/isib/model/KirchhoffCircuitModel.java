@@ -3,7 +3,7 @@ package com.example.isib.model;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CircuitModel {
+public class KirchhoffCircuitModel {
 
     private static final double MAX_ERROR_PERCENT = 50.0;
 
@@ -12,9 +12,9 @@ public class CircuitModel {
      * @param data Входные параметры цепи
      * @return Результаты расчёта
      */
-    public CircuitResults calculate(CircuitData data) {
-        CircuitResults results = new CircuitResults();
-        ErrorRate err = new ErrorRate();
+    public KirchhoffCircuitResults calculate(KirchhoffCircuitData data) {
+        KirchhoffCircuitResults results = new KirchhoffCircuitResults();
+        KirchhoffErrorRate err = new KirchhoffErrorRate();
         err.setActive(data.isErrorsEnabled());
         err.setVoltageRelativeError(clampPercentToFraction(data.getVoltageErrorPercent()));
         err.setResistorRelativeError(clampPercentToFraction(data.getResistorErrorPercent()));
@@ -69,7 +69,7 @@ public class CircuitModel {
     /**
      * Проверка первого закона Кирхгофа (KCL) по расчётным токам (погрешности только на входе).
      */
-    private Boolean validateKCL(CircuitResults results) {
+    private Boolean validateKCL(KirchhoffCircuitResults results) {
         double tolerance = 0.01;
         double inputCurrent = results.getTotalCurrent();
         double branchCurrent1 = results.getCurrentR2() + results.getCurrentR3();
@@ -85,7 +85,7 @@ public class CircuitModel {
      * Проверка второго закона Кирхгофа (KVL)
      * Сумма напряжений в контуре равна напряжению источника
      */
-    private Boolean validateKVL(CircuitData data, CircuitResults results) {
+    private Boolean validateKVL(KirchhoffCircuitData data, KirchhoffCircuitResults results) {
         double tolerance = 0.1;
         double totalVoltage = results.getVoltageR1() + results.getVoltageBlock1()
                 + results.getVoltageR4() + results.getVoltageBlock2();

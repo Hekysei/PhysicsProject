@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CircuitData {
+public class KirchhoffCircuitData {
   private double V1 = 12.0;
   private double R1 = 100.0;
   private double R2 = 200.0;
@@ -21,10 +21,10 @@ public class CircuitData {
   /** То же для номиналов резисторов, % (например 2 → ±2%). */
   private double resistorErrorPercent = 2.0;
 
-  public CircuitData() {
+  public KirchhoffCircuitData() {
   }
 
-  public CircuitData(double V1, double R1, double R2, double R3,
+  public KirchhoffCircuitData(double V1, double R1, double R2, double R3,
       double R4, double R5, double R6) {
     this.V1 = V1;
     this.R1 = R1;

@@ -17,7 +17,7 @@ import java.util.random.RandomGenerator;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ErrorRate {
+public class KirchhoffErrorRate {
 
     private boolean active = false;
 
